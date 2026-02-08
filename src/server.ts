@@ -42,3 +42,18 @@ process.on("uncaughtException", (error) => {
   }
 });
 
+process.on("SIGTERM", () => {
+  console.log("SIGTERM signal recieved. Server shutting down...");
+  if (server) {
+    server.close(() => {
+      process.exit(1);
+    });
+  }
+  process.exit(1);
+});
+
+//uncaught error test
+// throw new Error("Uncaught error test");
+
+//unhandled error test
+// Promise.reject(new Error("Unhandled promise error"));
